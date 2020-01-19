@@ -134,9 +134,7 @@ setup(
             "freezegun",
             "isort",
             "lxml",
-            "pytest==5.3.2",  # Also change in tox.ini, tracking issue at https://github.com/pytest-dev/pytest/issues/6492
             "pytest-cov",
-            "pytest-django",
             "pytest-mock",
             "pytest-rerunfailures",
             "pytest-sugar",
@@ -149,6 +147,10 @@ setup(
         "postgres": ["psycopg2-binary"],
         "redis": ["django_redis==4.11.*", "redis==3.3.*",],
     },
+    dependency_links=[
+        "git+https://github.com/SalmonMode/pytest@fix-exponential-recursion",
+        "git+https://github.com/SalmonMode/pytest-django@cnejame-fix-pytest-5-3-3-compatibility",
+    ],
     packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,
     zip_safe=False,
