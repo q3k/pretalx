@@ -3,6 +3,7 @@
 Release Notes
 =============
 
+- :bug:`863` If incorrect variables were used in the schedule update email template, pretalx did not catch this mistake ahead of time, and instead just refused to release a new schedule.
 - :bug:`-` When updating the settings for an event with a custom domain, pretalx would mistakenly show an error message that this domain was already in use for another event.
 - :release:`1.1.2 <2020-01-10>`
 - :bug:`-` If a CfP requested the submitters' availability at submission time, only logged-in users could successfully finish the submission workflow.
