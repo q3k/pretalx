@@ -93,6 +93,7 @@ setup(
     install_requires=[
         "beautifulsoup4==4.8.*",  # https://bazaar.launchpad.net/~leonardr/beautifulsoup/bs4/view/head:/CHANGELOG
         "bleach==3.1.*",  # https://bleach.readthedocs.io/en/latest/changes.html
+        "boto3==1.12.*", # https://github.com/boto/boto3/blob/develop/CHANGELOG.rst
         "celery==4.4.*",  # search for "what's new" on http://docs.celeryproject.org/en/latest/
         "csscompressor==0.9.*",  # 2017-11, no changelog, https://github.com/sprymix/csscompressor
         "cssutils==1.0.*",  # https://pythonhosted.org/cssutils/CHANGELOG.html
@@ -109,6 +110,7 @@ setup(
         "django-i18nfield==1.7.*",  # 2017-11, no changelog, https://github.com/raphaelm/django-i18nfield/
         "django-libsass==0.8",  # inactive, https://github.com/torchbox/django-libsass/blob/master/CHANGELOG.txt
         "django-scopes==1.2.*",  # https://github.com/raphaelm/django-scopes/releases
+        "django-storages==1.9.*", # https://github.com/jschneier/django-storages/blob/master/CHANGELOG.rst
         "djangorestframework==3.11.*",  # http://www.django-rest-framework.org/community/release-notes/
         "inlinestyler==0.2.*",  # https://github.com/dlanger/inlinestyler/blob/master/CHANGELOG
         "libsass==0.19.*",  # https://sass.github.io/libsass-python/changes.html

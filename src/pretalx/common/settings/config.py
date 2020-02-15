@@ -12,6 +12,12 @@ CONFIG = {
         "media": {"default": None, "env": os.getenv("PRETALX_FILESYSTEM_MEDIA"),},
         "static": {"default": None, "env": os.getenv("PRETALX_FILESYSTEM_STATIC"),},
     },
+    "s3media": {
+        "bucket": {"default": None, "env": os.getenv("PRETALX_S3MEDIA_BUCKET"),},
+        "access_key_id": {"default": None, "env": os.getenv("PRETALX_S3MEDIA_ACCESS_KEY_ID"),},
+        "secret_access_key": {"default": None, "env": os.getenv("PRETALX_S3MEDIA_SECRET_ACCES_KEY"),},
+        "endpoint": {"default": None, "env": os.getenv("endpoint"),},
+    },
     "site": {
         "debug": {
             "default": "runserver" in sys.argv,

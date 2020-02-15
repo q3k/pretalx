@@ -37,7 +37,22 @@ DATA_DIR = Path(
     )
 )
 LOG_DIR = Path(config.get("filesystem", "logs", fallback=DATA_DIR / "logs"))
-MEDIA_ROOT = Path(config.get("filesystem", "media", fallback=DATA_DIR / "media"))
+
+directories = []
+if config.get("s3media", "bucket", fallback=None):
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_ACCESS_KEY_ID = config.get("s3media", "access_key_id")
+    AWS_SECRET_ACCESS_KEY = config.get("s3media", "secret_access_key")
+    AWS_STORAGE_BUCKET_NAME = config.get("s3media", "bucket")
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_BUCKET_ACL = 'public-read'
+    AWS_S3_ENDPOINT_URL = config.get("s3media", "endpoint")
+    MEDIA_URL = "{}/{}/".format(AWS_S3_ENDPOINT_URL, AWS_STORAGE_BUCKET_NAME)
+else:
+    MEDIA_ROOT = Path(config.get("filesystem", "media", fallback=DATA_DIR / "media"))
+    directories.append(MEDIA_ROOT)
+    MEDIA_URL = "/media/"
+
 STATIC_ROOT = Path(
     config.get("filesystem", "static", fallback=BASE_DIR / "static.dist",)
 )
@@ -45,7 +60,8 @@ HTMLEXPORT_ROOT = Path(
     config.get("filesystem", "htmlexport", fallback=DATA_DIR / "htmlexport",)
 )
 
-for directory in (BASE_DIR, DATA_DIR, LOG_DIR, MEDIA_ROOT, HTMLEXPORT_ROOT):
+directories.extend([BASE_DIR, DATA_DIR, LOG_DIR, HTMLEXPORT_ROOT])
+for directory in directories:
     directory.mkdir(parents=True, exist_ok=True)
 
 
@@ -111,7 +127,6 @@ ALLOWED_HOSTS = [
 
 ROOT_URLCONF = "pretalx.urls"
 STATIC_URL = "/static/"
-MEDIA_URL = "/media/"
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
 
 

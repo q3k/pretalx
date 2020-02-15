@@ -2,6 +2,7 @@ import textwrap
 import urllib
 
 from csp.decorators import csp_update
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.exceptions import ValidationError
@@ -33,7 +34,7 @@ from pretalx.submission.forms import InfoForm, QuestionsForm, ResourceForm
 from pretalx.submission.models import Resource, Submission, SubmissionStates
 
 
-@method_decorator(csp_update(IMG_SRC="https://www.gravatar.com"), name="dispatch")
+@method_decorator(csp_update(IMG_SRC="https://www.gravatar.com", STYLE_SRC=settings.MEDIA_URL), name="dispatch")
 class ProfileView(LoggedInEventPageMixin, TemplateView):
     template_name = "cfp/event/user_profile.html"
 
@@ -130,6 +131,7 @@ class SubmissionViewMixin:
         )
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class SubmissionsListView(LoggedInEventPageMixin, ListView):
     template_name = "cfp/event/user_submissions.html"
     context_object_name = "submissions"
@@ -146,6 +148,7 @@ class SubmissionsListView(LoggedInEventPageMixin, ListView):
         return self.request.event.submissions.filter(speakers__in=[self.request.user])
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class SubmissionsWithdrawView(LoggedInEventPageMixin, SubmissionViewMixin, DetailView):
     template_name = "cfp/event/user_submission_withdraw.html"
     model = Submission
@@ -190,6 +193,7 @@ class SubmissionsWithdrawView(LoggedInEventPageMixin, SubmissionViewMixin, Detai
         return redirect("cfp:event.user.submissions", event=self.request.event.slug)
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class SubmissionConfirmView(LoggedInEventPageMixin, SubmissionViewMixin, FormView):
     permission_required = "submission.perform_actions"
     template_name = "cfp/event/user_submission_confirm.html"
@@ -238,6 +242,7 @@ class SubmissionConfirmView(LoggedInEventPageMixin, SubmissionViewMixin, FormVie
         return redirect("cfp:event.user.submissions", event=self.request.event.slug)
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class SubmissionsEditView(LoggedInEventPageMixin, SubmissionViewMixin, UpdateView):
     template_name = "cfp/event/user_submission_edit.html"
     model = Submission
@@ -367,6 +372,7 @@ class SubmissionsEditView(LoggedInEventPageMixin, SubmissionViewMixin, UpdateVie
         return redirect(self.object.urls.user_base)
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class DeleteAccountView(LoggedInEventPageMixin, View):
     @staticmethod
     def post(request, event):
@@ -380,6 +386,7 @@ class DeleteAccountView(LoggedInEventPageMixin, View):
         return redirect(request.event.urls.user + "?really")
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class SubmissionInviteView(LoggedInEventPageMixin, SubmissionViewMixin, FormView):
     form_class = SubmissionInvitationForm
     template_name = "cfp/event/user_submission_invitation.html"
@@ -420,6 +427,7 @@ class SubmissionInviteView(LoggedInEventPageMixin, SubmissionViewMixin, FormView
         return self.submission.urls.user_base
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class SubmissionInviteAcceptView(LoggedInEventPageMixin, DetailView):
     template_name = "cfp/event/invitation.html"
     context_object_name = "submission"
@@ -446,6 +454,7 @@ class SubmissionInviteAcceptView(LoggedInEventPageMixin, DetailView):
         return redirect("cfp:event.user.view", event=self.request.event.slug)
 
 
+@method_decorator(csp_update(STYLE_SRC=settings.MEDIA_URL))
 class MailListView(LoggedInEventPageMixin, TemplateView):
     template_name = "cfp/event/user_mails.html"
 

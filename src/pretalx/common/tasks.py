@@ -106,5 +106,8 @@ def regenerate_css(event_id: int):
 
         if event.settings.get(f"{local_app}_css_checksum", "") != checksum:
             newname = default_storage.save(fname, ContentFile(css))
-            event.settings.set(f"{local_app}_css_file", f"/media/{newname}")
+            logger.info(f"New name: {newname}")
+            newurl = default_storage.url(fname)
+            logger.info(f"New URL: {newurl}")
+            event.settings.set(f"{local_app}_css_file", newurl)
             event.settings.set(f"{local_app}_css_checksum", checksum)
